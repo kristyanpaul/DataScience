@@ -7,7 +7,7 @@ output: pdf_document
 
 1. Set up a Vector named age. 
 ```{r}
-age<-(34, 28, 22, 36,  27, 18, 52, 39, 42, 29, 35, 31, 27, 22, 27, 34, 19, 20, 57, 49,50,37,46,25,17,37,42,53,41,51,35,24,33,41)
+age<-c(34, 28, 22, 36,  27, 18, 52, 39, 42, 29, 35, 31, 27, 22, 27, 34, 19, 20, 57, 49,50,37,46,25,17,37,42,53,41,51,35,24,33,41)
 numofdatapts<-length(age)
 numofdatapts
 ```
@@ -19,7 +19,7 @@ recip_age
 ```
 3. Assign also new_age<-c(age, 0, age).
 ```{r}
-new_age<-c(age, o, age)
+new_age<-c(age, 0, age)
 new_age
 ```
 4. Sort the values for age.
@@ -33,13 +33,13 @@ max(age)
 ```
 6. Set up a Vector  named data.
 ```{r}
-data<-c(2.4, 2.8, 2.1, 2.5, 2.4, 2.2, 2.5, 2.3, 2.5,  2.3, 2.4, 2.7,)
+data<-c(2.4, 2.8, 2.1, 2.5, 2.4, 2.2, 2.5, 2.3, 2.5,  2.3, 2.4, 2.7)
 numofdatapts<-length(data)
 numofdatapts
 ```
 7. Generate a new Vector for Data where you double every value  of the data.
 ```{r}
-newdata<-2*data*
+newdata<-2*data
 newdata
 ```
 8. Generate a sequence or the following scenario.
@@ -98,12 +98,12 @@ datapts
 
 12. 
 ```{r}
-x<-{0+x+5+}
+#x<-{0+x+5+}(The code does not run because of a syntax error)
 ```
 
 13. 
 ```{r}
-score<-c(72, 86, 92, 63, 88, 89, 91, 92, 75, 75, 77.)
+score<-c(72, 86, 92, 63, 88, 89, 91, 92, 75, 75, 77)
 s2<-score[2]
 s2
 s3<-score[3]
@@ -115,7 +115,6 @@ s3
 ```{r}
 a<-c(1, 2, NA, 4, NA, 6, 7)
 print(a,na.print="-999")
-print(a.na.print="-999")
 ```
 
 15.
@@ -123,5 +122,6 @@ print(a.na.print="-999")
 name=readline(prompt="Input Your Name:")
 age=readline(prompt="Input Your Age:")
 print(paste("My name  is", name,"and I am", age, "years old"))
+print(R.version.string)
 ```
 
