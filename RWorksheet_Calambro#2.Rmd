@@ -1,0 +1,195 @@
+---
+title: "RWorksheet_Calambro#2"
+author: "Christian Paul Calambro"
+date: "2024-09-26"
+output: html_document
+---
+
+1. 
+a. Create a vector using : operator
+```{r}
+x <- -5:5
+x
+```
+
+b.
+```{r}
+x <- 1:7
+x
+```
+
+2. Create a vector using seq() function
+```{r}
+x <- seq(1,3, by=0.2)
+x
+```
+
+
+3. A factory has a census of its workers. There are 50 workers in total. The following
+list shows their ages:
+a.
+```{r}
+ages <- c(34, 28, 22, 36, 27, 18, 52, 39, 42, 29, 35, 31, 27, 22, 37, 34, 19, 20, 57, 49, 50, 37, 46, 25, 17, 37, 43, 53, 41, 51, 35, 24, 33, 41, 53, 40, 18, 44, 38, 41, 48, 27, 39, 19, 30, 61, 54, 58, 26, 18)
+
+ages[3]
+```
+
+b.
+```{r}
+ages[-c(4, 12)]
+```
+
+4. Create a vector x <- c("first"=3, "second"=0, "third"=9). Then named the
+vector, names(x).
+a.
+```{r}
+x <- c("first" = 3, "second" = 0, "third" = 9)
+x[c("first", "third")]
+```
+
+5. Create a sequence x from -3:2.
+```{r}
+x <- -3:2
+x[2] <- 0
+x
+```
+
+6. *The following data shows the diesel fuel purchased by Mr. Cruz.
+a.
+```{r}
+month <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun")
+price_per_liter <- c(52.50, 57.25, 60.00, 65.00, 74.25, 54.00)
+purchase_quantity <- c(25, 30, 40, 50, 10, 45)
+fuel_data <- data.frame(month, price_per_liter, purchase_quantity)
+fuel_data
+```
+
+b.
+```{r}
+weighted.mean(price_per_liter, purchase_quantity)
+```
+
+7. R has actually lots of built-in datasets. For example, the rivers data “gives the lengths
+(in miles) of 141 “major” rivers in North America, as compiled by the US Geological
+Survey”.
+
+a.
+```{r}
+rivdata <- c(length(rivers), sum(rivers), mean(rivers), median(rivers), var(rivers), sd(rivers), min(rivers), max(rivers))
+data
+```
+
+
+b.
+
+[1]   141.0000    833357.0000   591.1844    425.0000    243908.4086   493.8708
+[7]   135.0000    3710.0000
+
+
+
+c.
+```{r}
+data <- c(length(rivers), sum(rivers), mean(rivers), median(rivers), var(rivers), sd(rivers), min(rivers), max(rivers))
+data
+```
+
+8. The table below gives the 25 most powerful celebrities and their annual pay as ranked
+by the editions of Forbes magazine and as listed on the Forbes.com website.
+
+a.
+```{r}
+celebrity_names <- c("Tom Cruise", "Rolling Stones", "Oprah Winfrey", "U2", "Tiger Woods", "Steven Spielberg", "Howard Stern", "50 Cent", "Cast of the Sopranos", "Dan Brown", "Bruce Springsteen", "Donald Trump", "Muhammad Ali", "Paul McCartney", "George Lucas", "Elton John","David Letterman", "Phil Mickelson", "J.K Rowling","Brad Pitt","Peter Jackson","Dr. Phil McGraw", "Jay Lenon", "Celine Dion", "Kobe Bryant")
+pay <- c(67, 90, 225, 110, 90, 332, 302, 41, 52, 88, 55, 44, 55, 40, 233, 34, 40, 47, 75, 25, 39, 45, 32, 40, 31)
+power_ranking <- 1:25
+celebrity_data <- data.frame(Power_Ranking = power_ranking, Celebrity_Name = celebrity_names, Pay = pay)
+celebrity_data
+
+```
+
+
+b.
+```{r}
+power_ranking[4] <- 15
+pay[4] <- 90
+power_ranking
+pay
+```
+
+c. 
+
+```{r}
+write.csv(celebrity_data, "Power-Ranking.csv", row.names = FALSE)
+rank_data <- read.csv("Power-Ranking.csv")
+rank_data
+
+```
+
+d. 
+```{r}
+ranks_subset <-rank_data[10:20, ]
+save(ranks_subset, file = "Ranks.RData")
+```
+
+
+9. Download the Hotels-Vienna https://tinyurl.com/Hotels-Vienna
+a.
+```{r}
+library(openxlsx)
+hotels_data <- read.xlsx("hotels-vienna.xlsx")
+hotels_data
+```
+
+b.
+```{r}
+dim(hotels_data)
+```
+
+c. 
+```{r}
+selected_data <- hotels_data[, c("country", "neighbourhood", "price", "stars", "accommodation_type", "rating")]
+selected_data
+```
+
+
+d.
+```{r}
+save(selected_data, file = "new.RData")
+load("new.RData")
+head(selected_data)
+tail(selected_data)
+
+```
+
+
+
+10. Create a list of ten (10) vegetables you ate during your lifetime. If none, just list down.
+
+a.
+```{r}
+vegetables <- c("Tomato", "Cucumber", "Carrot", "Potato", "Spinach", "Broccoli", "Pepper", "Lettuce", "Cabbage", "Onion")
+vegetables
+```
+
+
+
+b.
+```{r}
+vegetables <- c(vegetables, "Zucchini", "Eggplant")
+vegetables
+```
+
+
+c.
+```{r}
+vegetables <- append(vegetables, c("Beetroot", "Garlic", "Peas", "Pumpkin"), after=5)
+vegetables
+```
+
+
+
+d.
+```{r}
+vegetables <- vegetables[-c(5, 10, 15)]
+vegetables
+```
+
