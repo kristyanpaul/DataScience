@@ -121,7 +121,6 @@ Male = 1 and Female = 2]. Write the R codes and its output.
 ```{r}
 household$Sex <- factor(household$Sex, levels = c("Male", "Female"), labels = c(1, 2))
 
-household$Sex <- as.integer(household$Sex)
 
 household
 ```
@@ -130,11 +129,48 @@ household
 c. Convert the Type of Houses into factor and change it into integer. [Legend: Wood
 = 1; Congrete = 2; Semi-Congrete = 3;]. Write the R codes and its output.
 ```{r}
-household$Types.of.Houses <- factor(household$Types.of.Houses, levels = c("Wood", "Congrete", "Semi-congrete"), labels = c(1, 2, 3))
+household$Types.of.Houses <- factor(household$Types.of.Houses, levels = c("Wood", "Congrete", "Semi-Congrete"), labels = c(1, 2, 3))
 
-household$Types.of.Houses <- as.integer(household$Types.of.Houses)
 
 household
 ```
+
+
+d. On father’s occupation, factor it as Farmer = 1; Driver = 2; and Others = 3. What
+is the R code and its output?
+```{r}
+household$Fathers.Occupation <- factor(household$Fathers.Occupation, levels = c(1,2,3),  labels = c("Farmer", "Driver", "Others"))
+
+
+
+household
+```
+
+
+e. Select only all females respondent that has a father whose occupation is driver. Write
+the codes and its output.
+```{r}
+female_respondents <- subset(household, Sex == 2 & Fathers.Occupation == "Driver")
+
+female_respondents
+```
+
+
+f. Select the respondents that have greater than or equal to 5 number of siblings attending
+school. Write the codes and its output.
+```{r}
+respondents_siblings <- subset(household, Siblings.at.School >= 5)
+
+respondents_siblings
+```
+
+
+4. Interpret the graph.
+
+The Graph illustrates the daily number of tweets from July 14 to July 21, 2020, categorized by sentiment—negative, neutral, and positive. It shows that negative tweets were the most frequent on most days, followed by neutral tweets, with positive tweets being the least common. This suggests that during that week, there was a greater expression of dissatisfaction or concern among Twitter users. Additionally, the consistent level of neutral tweets indicates ongoing discussions that did not strongly lean toward either positive or negative sentiments.
+
+
+
+
 
 
