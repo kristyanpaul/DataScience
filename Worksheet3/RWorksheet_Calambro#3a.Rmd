@@ -1,0 +1,263 @@
+---
+title: "RWorksheet_Calambro#3a"
+author: "Christian Paul Calambro"
+date: "2024-10-02"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+VECTORS
+1. There is a built-in vector LETTERS contains the uppercase letters of the alphabet
+and letters which contains the lowercase letters of the alphabet.
+
+a.You need to produce a vector that contains the first 11 letters.
+```{r}
+
+
+first_11_LETTERS <- LETTERS[1:11]
+first_11_LETTERS
+```
+
+
+b.Produce a vector that contains the odd numbered letters.
+```{r}
+ODD_LETTERS <-LETTERS[seq(1, length(LETTERS), by =2)]
+ODD_LETTERS
+```
+
+c. Produce a vector that contains the vowels
+```{r}
+VOWELS_LETTERS<-c("A", "E", "I", "O", "U")
+VOWELS_LETTERS
+```
+
+d. Produce a vector that contains the last 5 lowercase letters.
+```{r}
+
+
+lowercase_5_last <- letters[22:26]
+lowercase_5_last
+```
+
+e. Produce a vector that contains letters between 15 to 24 letters in lowercase.
+```{r}
+lowercase <- letters[15:26]
+letters
+```
+
+2. Create a vector(not a dataframe) with the average temperatures in April for Tugue-
+garao City, Manila, Iloilo City, Tacloban, Samal Island, and Davao City. The average
+temperatures in Celcius are 42, 39, 34, 34, 30, and 27 degrees.
+
+a. What is the R code and its result for creating a character vector for the city/town
+of Tuguegarao City, Manila, Iloilo City, Tacloban,Samal Island, and Davao City? Name the
+object as city. The names should follow the same order as in the instruction.
+
+```{r}
+city <- c("Tuguegarao City", "Manila","Iloilo City", "Tacloban", "Samal Island", "Davao City")
+```
+
+
+b. The average temperatures in Celcius are 42, 39, 34, 34, 30, and 27 degrees.
+Name the object as temp. Write the R code and its output. Numbers should also follow
+what is in the instruction.
+
+```{r}
+temp <- c(42, 39, 34, 34, 30, 27)
+```
+
+
+c. Create a dataframe to combine the city and the temp by using ‘data.frame(). What
+the R code and its result?
+
+```{r}
+city_temp <- data.frame(city, temp)
+city_temp
+```
+
+
+d. Associate the dataframe you have created in 2.(c) by naming the columns using
+the names() function. Change the column names by using names() function as City and
+Temperature. What is the R code and its result?
+
+```{r}
+names(city_temp) <- c("city", "temp")
+city_temp
+```
+
+
+e. Print the structure by using str() function. Describe the output.
+
+```{r}
+str(city_temp)
+```
+
+
+f. From the answer in d, what is the content of row 3 and row 4 What is its R code and
+its output?
+
+```{r}
+row_3 <- city_temp[3,]
+row_4 <- city_temp[4,]
+
+row_3
+row_4
+```
+3	Iloilo City	34	
+4	Tacloban	34	
+
+
+g. From the answer in d, display the city with highest temperature and the city with
+the lowest temperature. What is its R code and its output?
+
+```{r}
+highest_temp <- city_temp[which.max(city_temp$temp),]
+
+lowest_temp <- city_temp[which.min(city_temp$temp),]
+
+highest_temp
+lowest_temp
+```
+
+1	Tuguegarao City	42	
+6	Davao City	27	
+
+
+
+MATRICES
+2. Create a matrix of one to eight and eleven to fourteen with four columns and three
+rows.
+a. What will be the R code for the #2 question and its result?
+
+```{r}
+matrix <-matrix(data=c(1:8, 11:14),ncol = 4, nrow = 3, byrow=TRUE)
+matrix
+```
+      [,1] [,2] [,3] [,4]
+[1,]    1    2    3    4
+[2,]    5    6    7    8
+[3,]   11   12   13   14
+
+
+b. Multiply the matrix by two. What is its R code and its result?
+```{r}
+multiply <- matrix*2
+multiply
+```
+      [,1] [,2] [,3] [,4]
+[1,]    2    4    6    8
+[2,]   10   12   14   16
+[3,]   22   24   26   28
+
+
+c. What is the content of row 2? What is its R code?
+```{r}
+row_2 <- matrix[,2]
+row_2
+```
+[1]  2  6 12
+
+
+d. What will be the R code if you want to display the column 3 and column 4 in row 1
+and row 2? What is its output?
+```{r}
+colomn_row <- matrix[1:2, 3:4]
+colomn_row
+```
+      [,1] [,2]
+[1,]    3    4
+[2,]    7    8
+
+
+e.What is the R code is you want to display only the columns in 2 and 3, row 3? What
+is its output?
+
+```{r}
+colomn_row2 <- matrix[3, 2:3]
+colomn_row2
+```
+[1] 12 13
+
+
+f. What is the R code is you want to display only the columns 4? What is its output?
+
+```{r}
+colomn4 <- matrix[,4]
+colomn4
+```
+[1]  4  8 14
+
+
+g. Name the rows as isa, dalawa, tatlo and columns as uno, dos, tres, quatro
+for the matrix that was created in b.‘. What is its R code and corresponding output?
+
+```{r}
+rownames(matrix) <- c("isa", "dalawa", "tatlo")
+colnames(matrix) <- c("uno", "dos", "tres", "quatro")
+matrix
+```
+        uno dos tres quatro
+isa      1   2    3      4
+dalawa   5   6    7      8
+tatlo   11  12   13     14
+
+
+h. From the original matrix you have created in a, reshape the matrix by assigning a
+new dimension with dim(). New dimensions should have 2 columns and 6 rows. What will
+be the R code and its output?
+
+```{r}
+dim(matrix) <- c(6, 2)
+matrix
+```
+      [,1] [,2]
+[1,]    1    3
+[2,]    5    7
+[3,]   11   13
+[4,]    2    4
+[5,]    6    8
+[6,]   12   14
+
+
+ARRAY
+3. An array contains 1, 2, 3, 6, 7, 8, 9, 0, 3, 4, 5, 1
+
+a. Create an array for the above numeric values. Each values will be repeated twice
+What will be the R code if you are to create a three-dimensional array with 4 columns and
+2 rows. What will be its output?
+
+
+```{r}
+number <- c(1, 2, 3, 6, 7, 8, 9, 0, 3, 4, 5, 1
+)
+repeat_number <- rep(number, each=2)
+number3D <- array(repeat_number, dim=c(2,4,3))
+number3D
+
+```
+
+
+
+b. How many dimensions do your array have?
+3 Dimensions
+
+
+
+c. Name the rows as lowercase letters and columns as uppercase letters starting from
+the A. The array names should be “1st-Dimensional Array”, “2nd-Dimensional Array”, and
+“3rd-Dimensional Array”. What will be the R codes and its output?
+
+
+```{r}
+rownames(number3D) <- letters[1:2]
+colnames(number3D) <- LETTERS[1:4]
+dimnames(number3D) <- list(rownames(number3D), colnames(number3D), c("1st-Dimensional Array", "2nd-Dimensional Array", "3rd-Dimensional Array"))
+number3D
+```
+
+
+
+
+
+
