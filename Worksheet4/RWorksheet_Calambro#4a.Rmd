@@ -1,0 +1,88 @@
+---
+title: "RWorksheet_Calambro#4a"
+author: "Christian Paul Calambro"
+date: "2024-10-02"
+output: pdf_document
+---
+
+1. The table below shows the data about shoe size and height. Create a data frame.
+```{r}
+library(readxl)
+Household <- read_excel("HouseHold_Data.xlsx")
+
+Household
+```
+
+a. Describe the data
+
+The data set includes 25 people with information on their shoe size, height, and gender. Shoe sizes range from 5.0 to 13.0, and heights range from 59.0 to 77.0 inches. Males generally have larger shoe sizes and are taller than females. Taller individuals tend to have bigger shoe sizes.
+
+
+
+b. Create a subset by males and females with their corresponding shoe size and height.
+What its result? Show the R scripts.
+```{r}
+males <- subset(Household, Gender == "M", select = c(Shoe_size, Height))
+females <- subset(Household, Gender == "F", select = c(Shoe_size, Height))
+males
+females
+```
+
+
+
+
+c. Find the mean of shoe size and height of the respondents. Write the R scripts and its
+result.
+```{r}
+meanofshoes <- mean(Household$Shoe_size)
+meanofheight <- mean(Household$Height)
+
+paste("The Mean of Shoes:", meanofshoes)
+paste("The Mean of Height:", meanofheight)
+```
+
+
+d. Is there a relationship between shoe size and height? Why?
+Yes, there is a relationship between the shoe size and the height.The taller individuals tend to have larger shoe sizes.
+
+
+
+FACTORS
+
+2. Construct character vector months to a factor with factor() and assign the result to
+factor_months_vector. Print out factor_months_vector and assert that R prints out
+the factor levels below the actual values.
+```{r}
+Months <- c("March", "April", "January", "November", "January",
+            "September", "October", "September", "November", "August",
+            "January", "November", "November", "February", "May", "August",
+            "July", "December", "August", "August", "September", "November", 
+            "February", "April")
+
+Factor_Months <- factor(Months)
+Factor_Months
+levels(Months)
+```
+
+
+3. Then check the summary() of the months_vector and factor_months_vector. | Inter-
+pret the results of both vectors. Are they both equally useful in this case?
+```{r}
+("The Summary of Months:")
+summary(Months)
+
+
+("The Summary of Factor_Months:")
+summary(Factor_Months)
+```
+
+
+
+
+
+
+
+
+
+
+
