@@ -78,8 +78,27 @@ summary(Factor_Months)
 
 
 
+4. Create a vector and factor for the table below.
+```{r}
+Directions <- c("East", "West", "North")
+
+Frequency <- c(1, 4, 3)
+
+new_order_data <- factor(Directions, levels = c("East", "West", "North"))
+
+("Directions Factor with Specified Order:")
+new_order_data
+
+```
 
 
+5. Enter the data below in Excel with file name = import_march.csv
+```{r}
+library(readxl)
+data <- read_excel("import_march.csv")
+
+data
+```
 
 
 
