@@ -101,6 +101,170 @@ data
 ```
 
 
+6. a. Create an R Program that allows the User to randomly select numbers from 1 to 50.
+Then display the chosen number. If the number is beyond the range of the selected choice,
+it will have to display a string “The number selected is beyond the range of 1 to 50”. If
+number 20 is inputted by the User, it will have to display “TRUE”, otherwise display the
+input number.
+
+```{r}
+Num <- readline(prompt = "Enter a number from 1-50:")
+Num
+
+```
+
+If the number is beyond the range of the selected choice,
+it will have to display a string “The number selected is beyond the range of 1 to 50”. If
+number 20 is inputted by the User, it will have to display “TRUE”, otherwise display the
+input number.
+
+```{r}
+Num <- readline(prompt = "Enter a number from 1-50:")
+if(Num > 50){
+  print("The number selected is beyond the range of 1 to 50.")
+}else if(Num == 20){
+  print("TRUE")
+}else{print(Num)
+}
+```
+
+
+7. Change
+At ISATU University’s traditional cafeteria, snacks can only be purchased with bills. A
+long-standing rule at the concession stand is that snacks must be purchased with as few
+coins as possible. There are three types of bills: 50 pesos, 100 pesos, 200 pesos, 500 pesos,
+1000 pesos.
+
+
+
+a. Write a function that prints the minimum number of bills that must be paid, given the
+price of the snack.
+Input: Price of snack (a random number divisible by 50) Output: Minimum number of bills
+needed to purchase a snack.
+
+```{r}
+min_amount <- function(price) {
+  count <- 0
+  
+  if (price >= 1000) {
+    count <- count + (price %/% 1000)
+    price <- price %% 1000           
+  }
+  
+  if (price >= 500) {
+    count <- count + (price %/% 500)  
+    price <- price %% 500          
+  }
+  
+  if (price >= 200) {
+    count <- count + (price %/% 200) 
+    price <- price %% 200           
+  }
+  
+  if (price >= 100) {
+    count <- count + (price %/% 100)  
+    price <- price %% 100             
+  }
+  
+  if (price >= 50) {
+    count <- count + (price %/% 50)  
+    price <- price %% 50         
+  }
+  
+  else(count)
+}
+
+
+price <- 1150  
+cat("Minimum number of bills needed:", min_amount(price), "\n")
+
+```
+
+
+
+8. The following is each student’s math score for one semester. Based on this, answer the
+following questions.
+
+
+
+a. Create a dataframe from the above table. Write the R codes and its output.
+```{r}
+names <- c("Annie", "Thea", "Steve", "Hanna")
+grade1 <- c(85, 65, 85, 100)
+grade2 <- c(65, 75, 90, 90)
+grade3 <- c(75, 55, 80, 85)
+grade4 <- c(95, 75, 100, 90)
+
+names_grades <- data.frame(Name = names , Grade1 = grade1, Grade2 = grade2, Grade3 = grade3, Grade4 = grade4)
+
+print(names_grades)
+```
+
+
+
+b. Without using the rowMean function, output the average score of students whose average
+math score over 90 points during the semester. write R code and its output.
+Example Output: Annie’s average grade this semester is 88.75.
+```{r}
+for (i in 1:nrow(names_grades)) {
+
+  average <- (names_grades$Grade1[i] + names_grades$Grade2[i] + names_grades$Grade3[i] + names_grades$Grade4[i]) / 4
+  
+  # Check if the average is over 90
+  if (average > 90) {
+    cat(names_grades$Name[i], "'s average grade this semester is ", average, ".\n", sep = "")
+  }
+}
+```
+
+
+
+c. Without using the mean function, output as follows for the tests in which the average
+score was less than 80 out of 4 tests.
+Example output: The nth test was difficult.
+```{r}
+for (test in 1:4) {
+
+  total_score <- sum(names_grades[[paste0("Grade", test)]])
+  
+
+  average <- total_score / nrow(names_grades)
+  
+  
+  if (average < 80) {
+    cat("The", test, "test was difficult.\n")
+  }
+}
+```
+
+
+
+d. Without using the max function, output as follows for students whose highest score for
+a semester exceeds 90 points.
+Example Output: Annie’s highest grade this semester is 95.
+
+```{r}
+for (i in 1:nrow(names_grades)) {
+
+  highest <- names_grades$Grade1[i]
+  if (names_grades$Grade2[i] > highest) {
+    highest <- names_grades$Grade2[i]
+  }
+  if (names_grades$Grade3[i] > highest) {
+    highest <- names_grades$Grade3[i]
+  }
+  if (names_grades$Grade4[i] > highest) {
+    highest <- names_grades$Grade4[i]
+  }
+  
+
+  if (highest > 90) {
+    cat(names_grades$Name[i], "'s highest grade this semester is ", highest, ".\n", sep = "")
+  }
+}
+```
+
+
 
 
 
