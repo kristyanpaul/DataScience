@@ -1,0 +1,26 @@
+---
+title: "RWorksheet_Calambro#4b"
+author: "Christian Paul Calambro"
+date: "2024-10-28"
+output: pdf_document
+---
+
+1. Using the for loop, create an R script that will display a 5x5 matrix as shown in
+Figure 1. It must contain vectorA = [1,2,3,4,5] and a 5 x 5 zero matrix.
+
+```{r}
+vectorA <- c(1, 2, 3, 4, 5)
+matrixA <- matrix(0, nrow = 5, ncol = 5)
+
+
+for (i in 1:5) {
+  for (j in 1:5) {
+  
+    matrixA[i, j] <- vectorA[abs(i - j) + 1]
+  }
+}
+
+print(matrixA)
+
+```
+
