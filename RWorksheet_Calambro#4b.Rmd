@@ -5,22 +5,214 @@ date: "2024-10-28"
 output: pdf_document
 ---
 
-1. Using the for loop, create an R script that will display a 5x5 matrix as shown in
-Figure 1. It must contain vectorA = [1,2,3,4,5] and a 5 x 5 zero matrix.
 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#1
 ```{r}
-vectorA <- c(1, 2, 3, 4, 5)
-matrixA <- matrix(0, nrow = 5, ncol = 5)
-
+vectorA <- c(1,2,3,4,5)
+patmat <- matrix(0, nrow = 5, ncol = 5)
 
 for (i in 1:5) {
   for (j in 1:5) {
-  
-    matrixA[i, j] <- vectorA[abs(i - j) + 1]
+    patmat[i, j] <- vectorA[(j + i - 2) %% 5 + 1]
   }
 }
+cat("Pattern Matrix:\n")
+print(patmat)
 
-print(matrixA)
+zero_matrix <- matrix(0, nrow = 5, ncol = 5)
+cat("\nZero Matrix:\n")
+print(zero_matrix)
+```
+#2
+```{r}
+n <- 4
+
+
+for (i in 1:n) {
+  for (j in 1:i) {
+    cat("*") 
+  }
+  cat("\n") 
+}
+```
+#3
+```{r}
+First <- as.integer(readline(prompt = "Enter starting number for fibonacci sequence(up to 500): "))
+fibonacci <- c(0,1)
+
+repeat {
+  next_fib <- sum(tail(fibonacci, 2))
+  if (next_fib > 500) {
+    break
+  }
+  fibonacci <- c(fibonacci, next_fib)
+}
+
+result <- fibonacci[fibonacci >= First]
+cat("Fibonacci sequence from", First, "up to 500:", result, "\n")
+```
+#4a
+```{r}
+SHG <- read.csv("shoe_size_data.csv", header = TRUE, sep = ",")
+SHG[1:6,]
+```
+#4b
+```{r}
+male_sub <- subset(SHG, Gender.1 == "M")
+female_sub <- subset(SHG, Gender.1 == "F")
+
+num_male <- nrow(male_sub)
+num_female <- nrow(female_sub)
+
+cat("Number of Male observations:", num_male, "\n")
+cat("Number of Female observations:", num_female, "\n")
+```
+#4c
+```{r}
+gender_count <- table(SHG$Gender.1)
+bar_colors <- c("blue", "pink")  # Colors for male and female
+barplot(gender_count,
+        main = "Number of Males and Females in Household Data",
+        xlab = "Gender",
+        ylab = "Number of Observations",
+        col = bar_colors,
+        legend = rownames(gender_count),
+        beside = TRUE)
+
+# Add grid lines
+grid(nx = NULL, ny = NULL)
+```
+#5
+```{r}
+
+spending <- c(Food = 60, Electricity = 10, Savings = 5, Miscellaneous = 25)
+
+percent_labels <- paste0(names(spending), ": ", round(spending / sum(spending) * 100, 1), "%")
+
+
+colors <- c("lightblue", "lightgreen", "lightcoral", "lightpink")
+
+pie(spending,
+    labels = percent_labels,
+    col = colors,
+    main = "Dela Cruz Family Monthly Income Distribution"
+)
+```
+#6a
+```{r}
+data(iris)
+str(iris)
+```
+#6b
+```{r}
+mean_values <- colMeans(iris[, c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")])
+mean_values
+```
+#6c
+```{r}
+species_counts <- table(iris$Species)
+pie(species_counts,
+    labels = paste(names(species_counts), ": ", round(species_counts / sum(species_counts) * 100, 1), "%", sep=""),
+    col = c("lightblue", "lightgreen", "lightcoral"),
+    main = "Species Distribution in Iris Dataset"
+)
+```
+#6d
+```{r}
+setosa_subset <- tail(subset(iris, Species == "setosa"), 6)
+versicolor_subset <- tail(subset(iris, Species == "versicolor"), 6)
+virginica_subset <- tail(subset(iris, Species == "virginica"), 6)
+
+setosa_subset
+versicolor_subset
+virginica_subset
 
 ```
+#6e
+```{r}
+plot(iris$Sepal.Length, iris$Sepal.Width,
+     col = iris$Species,
+     pch = 19,
+     xlab = "Sepal Length",
+     ylab = "Sepal Width",
+     main = "Iris Dataset",
+     sub = "Sepal width and length by Species"
+)
 
+legend("topright", legend = levels(iris$Species),
+       col = 1:3, pch = 19)
+```
+#6f
+#For part f, after making the scatterplot, you can explain what you see by looking at how the points are #grouped for each species. Notice if certain species have bigger or smaller sepals (the lengths and widths of #the flower parts). See if each type of flower is grouped together or spread out differently, which might #tell you how their sepal sizes vary from one species to another.
+
+#7a
+```{r}
+library(readxl)  
+alexa_data <- read_excel("alexa_file.xlsx")
+
+
+alexa_data$variation <- gsub("Black\\s+Dot", "Black Dot", alexa_data$variation)
+alexa_data$variation <- gsub("Black\\s+Plus", "Black Plus", alexa_data$variation)
+alexa_data$variation <- gsub("Black\\s+Show", "Black Show", alexa_data$variation)
+alexa_data$variation <- gsub("Black\\s+Spot", "Black Spot", alexa_data$variation)
+alexa_data$variation <- gsub("White\\s+Dot", "White Dot", alexa_data$variation)
+alexa_data$variation <- gsub("White\\s+Plus", "White Plus", alexa_data$variation)
+alexa_data$variation <- gsub("White\\s+Show", "White Show", alexa_data$variation)
+alexa_data$variation <- gsub("White\\s+Spot", "White Spot", alexa_data$variation)
+
+
+table(alexa_data$variation)
+```
+#7b
+```{r}
+library(dplyr)
+
+
+variations_count <- alexa_data %>%
+  count(variation, name = "Total")
+
+
+save(variations_count, file = "variations.RData")
+
+
+print(variations_count)
+```
+#7c
+```{r}
+
+library(ggplot2)
+
+load("variations.RData")
+
+
+ggplot(variations_count, aes(x = variation, y = Total, fill = variation)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Total Count of Alexa Variations") +
+  xlab("Variation") +
+  ylab("Total Numbers") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_brewer(palette = "Set3")
+```
+#7d
+```{r}
+variations_count$Category <- ifelse(grepl("Black", variations_count$variation), "Black Variants", 
+                                    ifelse(grepl("White", variations_count$variation), "White Variants", NA))
+
+black_white_variants <- variations_count %>% filter(!is.na(Category))
+
+
+ggplot(black_white_variants, aes(x = variation, y = Total, fill = variation)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ Category, scales = "free_x") +  
+  ggtitle("Counts of Alexa Black and White Variants") +
+  xlab("Variation") +
+  ylab("Total Numbers") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_brewer(palette = "Set2")  
+```
