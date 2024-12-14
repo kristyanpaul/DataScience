@@ -1,0 +1,270 @@
+---
+title: "RWorksheet_Calambro#4c"
+author: "Christian Paul Calambro"
+date: "2024-11-100"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#1
+#a
+```{r}
+mpg <- read.csv("/cloud/project/Worksheet4/mpg.csv", header = TRUE, sep = ",")
+mpg
+```   
+#b
+#The categorical variables are the Manufacturer, Model, Trans, Drv, fl, and class.
+
+#c
+#The continuous variables are displ, cty, hwy.
+
+#2
+#The manufacturer with the most models in the dataset is Toyota, having 6 different models. The "caravan 2wd" model has the most variations, with 11 different entries.
+
+#a
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+
+# Group by manufacturer and count unique models
+mmc <- mpg %>%
+  group_by(manufacturer) %>%
+  summarise(unique_models = n_distinct(model)) %>%
+  arrange(desc(unique_models))
+
+# Print the result
+print(mmc)
+```
+#b
+```{r}
+# Base R plotting
+barplot(
+  mmc$unique_models,
+  names.arg = mmc$manufacturer,
+  col = "skyblue",
+  main = "Number of Unique Models by Manufacturer",
+  xlab = "Manufacturer",
+  ylab = "Number of Unique Models",
+  las = 2,
+  cex.names = 0.7
+)
+
+# ggplot2 plotting
+ggplot(mmc, aes(x = reorder(manufacturer, -unique_models), y = unique_models)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Number of Unique Models by Manufacturer", x = "Manufacturer", y = "Number of Unique Models") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+#2a
+```{r}
+ggplot(mpg, aes(model, manufacturer)) + geom_point()
+```
+#2b
+#Convert the counts into a heatmap for easier visual analysis.In this plot, darker shades indicate higher counts, making it easy to see popular model-manufacturer combinations at a glance. These modifications offer a clearer view of relationships and trends in the dataset.
+
+#3
+```{r}
+# Filter the top 20 observations
+top_20 <- mpg %>% 
+  slice(1:20) # Select the first 20 rows
+
+# Plot using ggplot
+ggplot(top_20, aes(x = model, y = year)) +
+  geom_point() +
+  labs(title = "Model vs. Year for Top 20 Observations",
+       x = "Model",
+       y = "Year") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+#4
+```{r}
+# Group by model and count the number of cars per model
+model_counts <- mpg %>%
+  group_by(model) %>%
+  summarise(car_count = n())
+
+# View the result
+model_counts
+```
+#4a
+
+```{r}
+
+# Filter the top 20 observations
+top_20 <- mpg %>% 
+  slice(1:20) # Select the first 20 rows
+
+# Plot using ggplot with geom_bar()
+ggplot(top_20, aes(x = model, fill = model)) +
+  geom_bar() +
+  labs(
+    title = "Number of Cars per Model (Top 20 Observations)",
+    x = "Car Model",
+    y = "Count"
+  ) +
+  scale_fill_viridis_d() +  # Adds color using a color scale
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+#4b
+
+```{r}
+# Get the count of cars per model and select the top 20 observations
+top_20_models <- mpg %>%
+  group_by(model) %>%
+  summarise(car_count = n()) %>%
+  arrange(desc(car_count)) %>%
+  slice(1:20)
+
+# Plot the top 20 models with a horizontal bar chart
+ggplot(top_20_models, aes(x = reorder(model, car_count), y = car_count, fill = model)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  coord_flip() +  # Flip coordinates for horizontal bars
+  labs(title = "Top 20 Car Models by Number of Cars",
+       x = "Car Model",
+       y = "Number of Cars") +
+  theme_minimal() +
+  scale_fill_viridis_d()
+```
+#5
+```{r}
+# Create the scatter plot
+ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
+  geom_point() +
+  labs(title = "Relationship between No. of Cylinders and Engine Displacement",
+       x = "Number of Cylinders",
+       y = "Engine Displacement") +
+  scale_color_viridis_c() +  # Use a color scale for continuous variable (engine displacement)
+  theme_minimal()
+```
+#5a
+#In the plot, as the number of cylinders (cyl) goes up, engine displacement (displ) generally increases too. This means cars with more cylinders tend to have bigger engines. The color intensity also shifts, reinforcing this trend: higher displacement values show up in colors tied to higher cylinder counts.
+
+
+#6
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, color = cyl)) +
+  geom_point() +
+  labs(title = "Relationship between Engine Displacement and Highway MPG",
+       x = "Engine Displacement",
+       y = "Highway Miles per Gallon") +
+  scale_color_viridis_c() +  # Use a color gradient for continuous variable (number of cylinders)
+  theme_minimal()
+```
+
+#6
+```{r}
+# Import the CSV file
+traffic_data <- read.csv("/cloud/project/Worksheet4/traffic.csv")
+
+# View the first few rows to confirm
+head(traffic_data)
+```
+#6a
+
+#The traffic dataset has 48,120 observations and 4 variables: DateTime, the date and time of each observation. Junction, the junction number. Vehicles, the number of vehicles counted. ID, a unique identifier for each observation.
+
+#6b
+```{r}
+# Subset data by each unique junction
+junction_1 <- subset(traffic_data, Junction == 1)
+junction_2 <- subset(traffic_data, Junction == 2)
+junction_3 <- subset(traffic_data, Junction == 3)
+junction_4 <- subset(traffic_data, Junction == 4)
+
+# Display the first few rows of each subset to confirm
+head(junction_1)
+head(junction_2)
+head(junction_3)
+head(junction_4)
+```
+#6c
+```{r}
+# Convert DateTime to date-time format in R if not already
+traffic_data$DateTime <- as.POSIXct(traffic_data$DateTime, format="%Y-%m-%d %H:%M:%S")
+
+# Plotting each junction's data
+ggplot(traffic_data, aes(x = DateTime, y = Vehicles, color = factor(Junction))) +
+  geom_line() +
+  labs(title = "Traffic Volume at Each Junction Over Time",
+       x = "Date and Time",
+       y = "Number of Vehicles",
+       color = "Junction") +
+  theme_minimal()
+```
+#7
+```{r}
+library(readxl)
+
+# Read the Excel file
+alexaExcel <- read_excel("/cloud/project/Worksheet4/alexa_file.xlsx")
+```
+
+#7a
+```{r}
+# Get the number of observations (rows) and columns
+num_observations <- nrow(alexaExcel)
+num_columns <- ncol(alexaExcel)
+
+# Display the number of observations (rows) and columns clearly
+cat("Number of observations:", nrow(alexaExcel), "\n")
+cat("Number of columns:", ncol(alexaExcel), "\n")
+```
+#7b
+```{r}
+# Group by variation and get the count for each variation
+variation_counts <- alexaExcel %>%
+  group_by(variation) %>%
+  summarise(total_count = n())
+
+# Display the result
+variation_counts
+```
+#7c
+```{r}
+# Plot the variations
+ggplot(variation_counts, aes(x = reorder(variation, -total_count), y = total_count, fill = variation)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  labs(title = "Total Count of Each Product Variation",
+       x = "Product Variation",
+       y = "Total Count") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_viridis_d()
+```
+#7d
+```{r}
+# Prepare data by counting verified reviews per date
+reviews_per_date <- alexaExcel %>%
+  group_by(date) %>%
+  summarise(num_reviews = n())
+
+# Plot the time series of reviews
+ggplot(reviews_per_date, aes(x = date, y = num_reviews)) +
+  geom_line(color = "blue") +
+  labs(title = "Number of Verified Reviews Over Time",
+       x = "Date",
+       y = "Number of Verified Reviews") +
+  theme_minimal()
+```
+#7e
+```{r}
+# Calculate average rating for each variation
+variation_ratings <- alexaExcel %>%
+  group_by(variation) %>%
+  summarise(average_rating = mean(rating))
+
+# Plot the average rating for each variation
+ggplot(variation_ratings, aes(x = reorder(variation, -average_rating), y = average_rating, fill = variation)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  labs(title = "Average Rating by Product Variation",
+       x = "Product Variation",
+       y = "Average Rating") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_viridis_d()
+```
